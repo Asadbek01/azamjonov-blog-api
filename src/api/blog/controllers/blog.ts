@@ -1,7 +1,30 @@
+'use strict';
+
 /**
  * blog controller
  */
 
-import { factories } from '@strapi/strapi'
+const { createCoreController } = require('@strapi/strapi').factories;
+const { sanitizeOutput } = require('strapi-utils');
 
-export default factories.createCoreController('api::blog.blog');
+function transformResponse(entity: any) {
+    // do some transformation on the entity
+    return entity;
+}
+
+module.exports = createCoreController('api::blog.blog', ({ strapi }) => ({
+    async findOne(ctx: any) {
+        const { id } = ctx.params;
+
+        const entity = await strapi.db.query('api::blog.blog').findOne({ 
+            where: { slug: id },    
+            populate: ['thumbnail'],
+         });
+        const sanitizedEntity = await sanitizeOutput(entity, strapi.models['blog'], ctx);
+
+        return transformResponse(sanitizedEntity);
+
+        },
+
+}));
+

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "blog",
     "pluralName": "blogs",
-    "displayName": "Blog"
+    "displayName": "Blogs",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,17 +14,48 @@
   "attributes": {
     "title": {
       "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Techs",
+        "Personal",
+        "Travel",
+        "Sports",
+        "News",
+        "Hadith",
+        "Quran",
+        "Islamic"
+      ],
       "required": true
     },
     "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "slug": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "image_assets": {
       "allowedTypes": [
         "images",
-        "files",
-        "videos",
-        "audios"
+        "files"
       ],
       "type": "media",
-      "multiple": false
+      "multiple": true
     }
   }
 }

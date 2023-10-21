@@ -367,14 +367,36 @@ export interface ApiBlogBlog extends Schema.CollectionType {
   info: {
     singularName: 'blog';
     pluralName: 'blogs';
-    displayName: 'Blog';
+    displayName: 'Blogs';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String & Attribute.Required;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    category: Attribute.Enumeration<
+      [
+        'Techs',
+        'Personal',
+        'Travel',
+        'Sports',
+        'News',
+        'Hadith',
+        'Quran',
+        'Islamic'
+      ]
+    > &
+      Attribute.Required;
     thumbnail: Attribute.Media;
+    slug: Attribute.String;
+    summary: Attribute.Text;
+    content: Attribute.RichText & Attribute.Required;
+    image_assets: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
