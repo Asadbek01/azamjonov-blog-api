@@ -1,0 +1,38 @@
+---
+services:
+  database:
+    image: postgres:14.2
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+
+  backend:
+    image: node:18
+    ports:
+      - 1337:1337
+    depends_on:
+      - database
+    volumes:
+      - ./:/backend/
+    command: bash -c "npm install && npm start"
+    working_dir: /backend
+
+  frontend:
+    image: node:18
+    ports:
+      - 4200:4200
+    depends_on:
+      - backend
+    volumes:
+      - ../blog-app/:/frontend/
+    command: bash -c "npm install && npm run dev"
+    working_dir: /frontend
+volumes:
+  db_data:

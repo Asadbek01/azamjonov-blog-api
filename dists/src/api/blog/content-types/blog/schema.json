@@ -1,0 +1,54 @@
+{
+    "kind": "collectionType",
+    "collectionName": "blogs",
+    "info": {
+        "singularName": "blog",
+        "pluralName": "blogs",
+        "displayName": "Blogs",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true,
+            "maxLength": 255
+        },
+        "category": {
+            "type": "enumeration",
+            "enum": [
+                "Techs",
+                "Personal",
+                "Travel",
+                "Sports",
+                "News",
+                "Hadith",
+                "Quran",
+                "Islamic"
+            ],
+            "required": true
+        },
+        "thumbnail": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "summary": {
+            "type": "text"
+        },
+        "content": {
+            "type": "richtext",
+            "required": true
+        },
+        "slug": {
+            "type": "uid",
+            "targetField": "title"
+        }
+    }
+}
